@@ -61,42 +61,56 @@ function detectSwipe(element, func) {
         var t = e.touches[0];
         swipe_det.sX = t.screenX; 
         swipe_det.sY = t.screenY;
+		//console.log(swipe_det.sX, swipe_det.sY)
       },false);
       element.addEventListener('touchmove',function(e){
         e.preventDefault();
         var t = e.touches[0];
         swipe_det.eX = t.screenX; 
         swipe_det.eY = t.screenY;    
+		console.log(swipe_det.eX, swipe_det.eY)
       },false);
+
       element.addEventListener('touchend',function(e){
-        //horizontal detection
-        if ((((swipe_det.eX - min_x > swipe_det.sX) || (swipe_det.eX + min_x < swipe_det.sX)) && ((swipe_det.eY < swipe_det.sY + max_y) && (swipe_det.sY > swipe_det.eY - max_y)))) {
-          if(swipe_det.eX > swipe_det.sX) direc = "r";
-          else direc = "l";
-        }
-        //vertical detection
-        if ((((swipe_det.eY - min_y > swipe_det.sY) || (swipe_det.eY + min_y < swipe_det.sY)) && ((swipe_det.eX < swipe_det.sX + max_x) && (swipe_det.sX > swipe_det.eX - max_x)))) {
-          if(swipe_det.eY > swipe_det.sY) direc = "d";
-          else direc = "u";
-        }
+
+       // //horizontal detection
+       // if ((((swipe_det.eX - min_x > swipe_det.sX) || (swipe_det.eX + min_x < swipe_det.sX)) && ((swipe_det.eY < swipe_det.sY + max_y) && (swipe_det.sY > swipe_det.eY - max_y)))) {
+       //   if(swipe_det.eX > swipe_det.sX) direc = "r";
+       //   else direc = "l";
+       // }
+       // //vertical detection
+       // if ((((swipe_det.eY - min_y > swipe_det.sY) || (swipe_det.eY + min_y < swipe_det.sY)) && ((swipe_det.eX < swipe_det.sX + max_x) && (swipe_det.sX > swipe_det.eX - max_x)))) {
+       //   if(swipe_det.eY > swipe_det.sY) direc = "d";
+       //   else direc = "u";
+       // }
+		//console.log(swipe_det.sX, swipe_det.eX)
+		//console.log(swipe_det.sY, swipe_det.eY)
+		diff_X = swipe_det.sX - swipe_det.eX
+		diff_Y = swipe_det.sY - swipe_det.eY
+		console.log('X', diff_X);
+		console.log('Y', diff_Y);
+		if (Math.abs(diff_X) > Math.abs(diff_Y)) {
+			if (diff_X > 0) {
+				direc = 37
+			} else {
+				direc = 39
+			}
+		}
+		else {
+			if (diff_Y > 0) {
+				direc = 38
+			}
+		}
     
-        if (direc != "") {
-          if(typeof func == 'function') func(direc);
-        }
-        direc = "";
+        if(typeof func == 'function') func(direc);
+        direc = undefined;
+
       },false);  
 }
 
 function handleSwipe(direction){
 	var swipeEvent = {}
-	console.log(direction);
-	if (direction == "u"){
-		swipeEvent.keyCode = 38
-	} else if(direction == "l") {
-		swipeEvent.keyCode = 37
-	} else if(direction == "d") {
-		swipeEvent.keyCode = 39
-	}
+	swipeEvent.keyCode = direction
 	if (swipeEvent.keyCode)	handleKeyDown(swipeEvent);
 }
 
