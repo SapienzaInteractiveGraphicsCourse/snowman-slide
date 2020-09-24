@@ -69,14 +69,12 @@ async function createScene(){
     renderer.setSize(sceneWidth, sceneHeight);
     dom = document.getElementsByClassName('game')[0];
 	dom.appendChild(renderer.domElement);
-	detectSwipe(dom, handleSwipe);
+	detectSwipe(renderer.domElement, handleSwipe);
 	createEnvironment();
-	//controls = new THREE.SwipeControls(camera);
 	hero = getHero('./assets/snowman/', body, scene)
 	addFallingSnow();
 	addExplosion();
 	
-	window.addEventListener('resize', onWindowResize, false);//resize callback
 	document.onkeydown = handleKeyDown;
 }
 
@@ -92,7 +90,6 @@ function update(){
 		nextIntStep();
 		obstacleCounter += 1;
 		speedCounter += 1;
-		//if(clock.getElapsedTime()>obstacleReleaseInterval){
 		if(obstacleCounter >= obstacleInterval){
 			obstacleCounter = 0;
 			clock.start();
@@ -132,7 +129,6 @@ function resumeGame() {
 }
 
 function onWindowResize() {
-	//resize & align
 	sceneHeight = window.innerHeight;
 	sceneWidth = window.innerWidth;
 	renderer.setSize(sceneWidth, sceneHeight);

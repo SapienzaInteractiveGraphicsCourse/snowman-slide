@@ -47,65 +47,48 @@ function sleep(ms) {
 }
 
 function detectSwipe(element, func) {
-      swipe_det = new Object();
-      swipe_det.sX = 0;
-      swipe_det.sY = 0;
-      swipe_det.eX = 0;
-      swipe_det.eY = 0;
-      var min_x = 20;  //min x swipe for horizontal swipe
-      var max_x = 40;  //max x difference for vertical swipe
-      var min_y = 40;  //min y swipe for vertical swipe
-      var max_y = 50;  //max y difference for horizontal swipe
-      var direc = "";
-      element.addEventListener('touchstart',function(e){
-        var t = e.touches[0];
-        swipe_det.sX = t.screenX; 
-        swipe_det.sY = t.screenY;
-		//console.log(swipe_det.sX, swipe_det.sY)
-      },false);
-      element.addEventListener('touchmove',function(e){
-        e.preventDefault();
-        var t = e.touches[0];
-        swipe_det.eX = t.screenX; 
-        swipe_det.eY = t.screenY;    
-		console.log(swipe_det.eX, swipe_det.eY)
-      },false);
 
-      element.addEventListener('touchend',function(e){
+	swipe_det = new Object();
+	swipe_det.sX = 0;
+	swipe_det.sY = 0;
+	swipe_det.eX = 0;
+	swipe_det.eY = 0;
 
-       // //horizontal detection
-       // if ((((swipe_det.eX - min_x > swipe_det.sX) || (swipe_det.eX + min_x < swipe_det.sX)) && ((swipe_det.eY < swipe_det.sY + max_y) && (swipe_det.sY > swipe_det.eY - max_y)))) {
-       //   if(swipe_det.eX > swipe_det.sX) direc = "r";
-       //   else direc = "l";
-       // }
-       // //vertical detection
-       // if ((((swipe_det.eY - min_y > swipe_det.sY) || (swipe_det.eY + min_y < swipe_det.sY)) && ((swipe_det.eX < swipe_det.sX + max_x) && (swipe_det.sX > swipe_det.eX - max_x)))) {
-       //   if(swipe_det.eY > swipe_det.sY) direc = "d";
-       //   else direc = "u";
-       // }
-		//console.log(swipe_det.sX, swipe_det.eX)
-		//console.log(swipe_det.sY, swipe_det.eY)
-		diff_X = swipe_det.sX - swipe_det.eX
-		diff_Y = swipe_det.sY - swipe_det.eY
-		console.log('X', diff_X);
-		console.log('Y', diff_Y);
-		if (Math.abs(diff_X) > Math.abs(diff_Y)) {
-			if (diff_X > 0) {
-				direc = 37
-			} else {
-				direc = 39
-			}
+	var direc = undefined;
+	element.addEventListener('touchstart',function(e){
+      e.preventDefault(); // to avoid scrolling
+	  var t = e.touches[0];
+	  swipe_det.sX = t.screenX; 
+	  swipe_det.sY = t.screenY;
+	},false);
+	element.addEventListener('touchmove',function(e){
+	  e.preventDefault();
+	  var t = e.touches[0];
+	  swipe_det.eX = t.screenX; 
+	  swipe_det.eY = t.screenY;    
+	},false);
+
+	element.addEventListener('touchend',function(e){
+
+	diff_X = swipe_det.sX - swipe_det.eX
+	diff_Y = swipe_det.sY - swipe_det.eY
+	if (Math.abs(diff_X) > Math.abs(diff_Y)) {
+		if (diff_X > 0) {
+			direc = 37
+		} else {
+			direc = 39
 		}
-		else {
-			if (diff_Y > 0) {
-				direc = 38
-			}
+	}
+	else {
+		if (diff_Y > 0) {
+			direc = 38
 		}
-    
-        if(typeof func == 'function') func(direc);
-        direc = undefined;
+	}
 
-      },false);  
+if(typeof func == 'function') func(direc);
+direc = undefined;
+
+},false);  
 }
 
 function handleSwipe(direction){
