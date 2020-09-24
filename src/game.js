@@ -6,6 +6,7 @@ THREE.Cache.enabled = false;
 var camera;
 var scene;
 var renderer;
+var controls;
 var dom;
 var id;
 var score_board;
@@ -68,8 +69,9 @@ async function createScene(){
     renderer.setSize(sceneWidth, sceneHeight);
     dom = document.getElementsByClassName('game')[0];
 	dom.appendChild(renderer.domElement);
-
+	detectSwipe(dom, handleSwipe);
 	createEnvironment();
+	//controls = new THREE.SwipeControls(camera);
 	hero = getHero('./assets/snowman/', body, scene)
 	addFallingSnow();
 	addExplosion();
