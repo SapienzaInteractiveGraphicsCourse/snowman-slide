@@ -2,8 +2,8 @@
 
 Snowman slide is a endless running game that features a snowman slidding down a very steep hill, help him by avoiding the incoming obstacles!
 <p align="center">
-<img src="/assets/menu/cover.png" height="300px"/>
-<img src="/assets/menu/gameplay.gif" height="302px"/>
+<img src="/assets/menu/cover.png" width="40%"/>
+<img src="/assets/menu/gameplay.gif" width="59%"/>
 </p>
 
 Instructions:
